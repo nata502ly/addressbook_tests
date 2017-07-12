@@ -6,6 +6,10 @@ class AddressBook:
         self.wd = webdriver.Chrome()
         self.wd.implicitly_wait(60)
 
+    def message(self):
+        return self.wd.find_element_by_css_selector('#content > div').text
+
+
     def logout(self):
         # Logout
         self.wd.find_element_by_css_selector("#top > form > a").click()
