@@ -8,19 +8,26 @@ class test_group_create(unittest.TestCase):
         self.wd.implicitly_wait(60)
     
     def test_test_group_create(self):
+        self.open_main_page()
+        self.login()
+        self.open_group_page()
+        self.create_group()
+        # TODO: Verify message
+        self.return_to_group_page()
+        self.logout()
+        # TODO: Verify group created
+
+    def logout(self):
+        # Logout
+        self.wd.find_element_by_css_selector("#top > form > a").click()
+
+    def return_to_group_page(self):
         wd = self.wd
-        # Open main page
-        wd.get("http://localhost/addressbook/index.php")
-        # Login
-        wd.find_element_by_name("user").click()
-        wd.find_element_by_name("user").clear()
-        wd.find_element_by_name("user").send_keys("admin")
-        wd.find_element_by_name("pass").click()
-        wd.find_element_by_name("pass").clear()
-        wd.find_element_by_name("pass").send_keys("secret")
-        wd.find_element_by_xpath("//form[@id='LoginForm']/input[3]").click()
-        # Open group page
-        wd.find_element_by_css_selector("#nav > ul > li.admin > a").click()
+        # Return to group page
+        wd.find_element_by_link_text("group page").click()
+
+    def create_group(self):
+        wd = self.wd
         # Create
         wd.find_element_by_name("new").click()
         wd.find_element_by_name("group_name").click()
@@ -35,12 +42,26 @@ class test_group_create(unittest.TestCase):
         if not wd.find_element_by_xpath("//div[@id='content']/form/select//option[11]").is_selected():
             wd.find_element_by_xpath("//div[@id='content']/form/select//option[11]").click()
         wd.find_element_by_name("submit").click()
-        # TODO: Verify message
-        # Return to group page
-        wd.find_element_by_link_text("group page").click()
-        # Logout
-        wd.find_element_by_css_selector("#top > form > a").click()
-        # TODO: Verify group created
+
+    def open_group_page(self):
+        wd = self.wd
+        # Open group page
+        wd.find_element_by_css_selector("#nav > ul > li.admin > a").click()
+
+    def login(self):
+        wd = self.wd
+        # Fill form login
+        wd.find_element_by_name("user").click()
+        wd.find_element_by_name("user").clear()
+        wd.find_element_by_name("user").send_keys("admin")
+        wd.find_element_by_name("pass").click()
+        wd.find_element_by_name("pass").clear()
+        wd.find_element_by_name("pass").send_keys("secret")
+        # Submit login
+        wd.find_element_by_xpath("//form[@id='LoginForm']/input[3]").click()
+
+    def open_main_page(self):
+        self.wd.get("http://localhost/addressbook/index.php")
 
     def tearDown(self):
         self.wd.quit()
