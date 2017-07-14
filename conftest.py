@@ -12,6 +12,7 @@ def app():
 
 @pytest.fixture()
 def init_login(app):
-    app.login(username="admin", password="secret")
+    if not app.is_logged():
+        app.login(username="admin", password="secret")
     yield
     app.logout()

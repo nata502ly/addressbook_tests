@@ -1,13 +1,20 @@
 from selenium import webdriver
+from selenium.webdriver.common.by import By
 
 
 class AddressBook:
     def __init__(self):
         self.wd = webdriver.Chrome()
-        self.wd.implicitly_wait(60)
+        self.wd.implicitly_wait(5)
 
     def open_main_page(self):
         self.wd.get("http://localhost/addressbook/index.php")
+
+    def is_element_present(self, by, value):
+        return not len(self.wd.find_elements(by, value)) == 0
+
+    def is_logged(self):
+        return self.is_element_present(By.NAME, 'logout')
 
     def login(self, username, password):
         wd = self.wd
