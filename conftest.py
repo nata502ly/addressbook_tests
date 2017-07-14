@@ -1,8 +1,17 @@
 import pytest
 from addressbook_api import AddressBook
 
+
 @pytest.fixture()
 def app():
-    a = AddressBook()
-    yield a
-    a.destroy()
+    app = AddressBook()
+    app.open_main_page()
+    yield app
+    app.destroy()
+
+
+@pytest.fixture()
+def init_login(app):
+    app.login(username="admin", password="secret")
+    yield
+    app.logout()
