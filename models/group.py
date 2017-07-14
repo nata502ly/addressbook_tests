@@ -5,4 +5,10 @@ class Group:
         self.footer = footer
 
     def __str__(self):
-        pass
+        return "Group: {}, {}, {}".format(self.name, self.header, self.footer)
+
+
+if __name__ == "__main__":
+    g = Group(name="Test")
+    print(g.name)
+    print(g)

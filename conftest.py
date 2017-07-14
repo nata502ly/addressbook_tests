@@ -23,3 +23,13 @@ def init_login(app):
 def init_group(app, init_login):
     if not app.is_groups_present():
         app.create_group(Group(name="Test"))
+
+
+groups = [
+    Group(name="00000090000", header="00000", footer="000000"),
+    Group(name="aesrfedf")
+]
+
+@pytest.fixture(params=groups, ids=[str(g) for g in groups])
+def group(request):
+    return request.param
