@@ -2,7 +2,7 @@ import pytest
 from addressbook_api import AddressBook
 
 
-@pytest.fixture()
+@pytest.fixture(scope="session")
 def app():
     app = AddressBook()
     app.open_main_page()
