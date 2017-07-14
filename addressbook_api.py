@@ -52,6 +52,15 @@ class AddressBook:
         #     wd.find_element_by_xpath("//div[@id='content']/form/select//option[11]").click()
         wd.find_element_by_name("submit").click()
 
+    def delete_first_group(self):
+        wd = self.wd
+        checkboxes = wd.find_elements_by_name('selected[]')
+        if not checkboxes[0].is_selected():
+            checkboxes[0].click()
+        button = wd.find_element_by_name("delete")
+        button.click()
+
+
     def message(self):
         return self.wd.find_element_by_css_selector('#content > div').text
 
