@@ -20,6 +20,10 @@ class AddressBook:
         self.open_group_page()
         return self.is_element_present(By.NAME, "selected[]")
 
+    def group_count(self):
+        self.open_group_page()
+        return len(self.wd.find_elements_by_name("selected[]"))
+
     def login(self, username, password):
         wd = self.wd
         # Fill form login
@@ -66,11 +70,11 @@ class AddressBook:
         #     wd.find_element_by_xpath("//div[@id='content']/form/select//option[11]").click()
         wd.find_element_by_name("submit").click()
 
-    def delete_first_group(self):
+    def delete_group(self, index):
         wd = self.wd
         checkboxes = wd.find_elements_by_name('selected[]')
-        if not checkboxes[0].is_selected():
-            checkboxes[0].click()
+        if not checkboxes[index].is_selected():
+            checkboxes[index].click()
         button = wd.find_element_by_name("delete")
         button.click()
 
