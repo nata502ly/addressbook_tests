@@ -3,12 +3,13 @@ from selenium.webdriver.common.by import By
 
 
 class AddressBook:
-    def __init__(self):
-        self.wd = webdriver.Chrome()
+    def __init__(self, driver, base_url):
+        self.wd = driver
         self.wd.implicitly_wait(5)
+        self.base_url = base_url
 
     def open_main_page(self):
-        self.wd.get("http://localhost/addressbook/index.php")
+        self.wd.get(self.base_url)
 
     def is_element_present(self, by, value):
         return not len(self.wd.find_elements(by, value)) == 0
