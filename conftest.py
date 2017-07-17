@@ -1,6 +1,7 @@
 import pytest
 from addressbook_api import AddressBook
 from models.group import Group
+from data.groups_data import groups_list
 
 
 @pytest.fixture(scope="session")
@@ -25,11 +26,7 @@ def init_group(app, init_login):
         app.create_group(Group(name="Test"))
 
 
-groups = [
-    Group(name="00000090000", header="00000", footer="000000"),
-    Group(name="aesrfedf")
-]
 
-@pytest.fixture(params=groups, ids=[str(g) for g in groups])
+@pytest.fixture(params=groups_list, ids=[str(g) for g in groups_list])
 def group(request):
     return request.param
