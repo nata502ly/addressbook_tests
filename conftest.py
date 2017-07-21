@@ -6,6 +6,7 @@ import pytest
 from data.groups_data import groups_list
 from models.group import Group
 from web_api.addressbook_api import AddressBook
+from db_api.addressbook_db import AddressbookDB
 
 
 def pytest_addoption(parser):
@@ -22,16 +23,23 @@ def config(request):
 
 @pytest.fixture()
 def app(selenium, config):
-    app = AddressBook(selenium, base_url=config["base_url"])
+    app = AddressBook(selenium, base_url=config["web"]["base_url"])
     app.open_main_page()
     yield app
     app.destroy()
 
 
+@pytest.fixture(scope="session")
+def db(config):
+    dbfixture = AddressbookDB(**config["db"])
+    yield dbfixture
+    dbfixture.close()
+
+
 @pytest.fixture()
 def init_login(app, config):
     if not app.session.is_logged():
-        app.session.login(username=config["username"], password=config["password"])
+        app.session.login(username=config["web"]["username"], password=config["web"]["password"])
     yield
     app.session.logout()
 
