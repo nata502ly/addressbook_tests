@@ -1,5 +1,5 @@
-allure-pytest==2.1.1b1
-allure-python-commons==2.1.1b1
+pytest-allure-adaptor==1.7.7
+lxml==3.7.3
 apipkg==1.4
 attrs==17.2.0
 certifi==2017.4.17
